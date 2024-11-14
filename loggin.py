@@ -90,7 +90,7 @@ proxy_url = 'https://193.186.4.104:8080'  # Proksi manzilingizni kiriting
 # Login Student tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Student')
 async def handle_login_student(message: types.Message):
-    connector = aiohttp.ProxyConnector(proxy=proxy_url)
+    connector = aiohttp.TCPConnector(proxy=proxy_url)
     async with aiohttp.ClientSession(connector=connector) as session:
         for credentials in user_credentials:
             login_data = {
@@ -106,7 +106,7 @@ async def handle_login_student(message: types.Message):
 # Login Family tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Family')
 async def handle_login_family(message: types.Message):
-    connector = aiohttp.ProxyConnector(proxy=proxy_url)
+    connector = aiohttp.TCPConnector(proxy=proxy_url)
     async with aiohttp.ClientSession(connector=connector) as session:
         for credentials in user_credentials_family:
             login_data = {
