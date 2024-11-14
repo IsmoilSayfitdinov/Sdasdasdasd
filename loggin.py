@@ -90,14 +90,14 @@ proxy_url = 'https://193.186.4.104:8080'  # Proksi manzilingizni kiriting
 # Login Student tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Student')
 async def handle_login_student(message: types.Message):
-    connector = aiohttp.TCPConnector(proxy=proxy_url)
-    async with aiohttp.ClientSession(connector=connector) as session:
+    # Create a session with proxy settings
+    async with aiohttp.ClientSession() as session:
         for credentials in user_credentials:
             login_data = {
                 'login': credentials['login'],
                 'password': credentials['password']
             }
-            async with session.post('https://login.emaktab.uz/', data=login_data) as response:
+            async with session.post('https://login.emaktab.uz/', data=login_data, proxy=proxy_url) as response:
                 if response.status == 200:
                     await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
                 else:
@@ -106,14 +106,14 @@ async def handle_login_student(message: types.Message):
 # Login Family tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Family')
 async def handle_login_family(message: types.Message):
-    connector = aiohttp.TCPConnector(proxy=proxy_url)
-    async with aiohttp.ClientSession(connector=connector) as session:
+    # Create a session with proxy settings
+    async with aiohttp.ClientSession() as session:
         for credentials in user_credentials_family:
             login_data = {
                 'login': credentials['login'],
                 'password': credentials['password']
             }
-            async with session.post('https://login.emaktab.uz/', data=login_data) as response:
+            async with session.post('https://login.emaktab.uz/', data=login_data, proxy=proxy_url) as response:
                 if response.status == 200:
                     await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
                 else:
