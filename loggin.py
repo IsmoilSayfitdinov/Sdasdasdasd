@@ -1,8 +1,7 @@
+import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram import F
-import asyncio
-import aiohttp
 
 
 API_TOKEN = '7939396004:AAGzmCZ10PmzFFGejdDvgk-VLHvvQhqYeIU'
@@ -76,48 +75,44 @@ user_credentials_family = [
     {"name": "Hayitova Anorxol (Sabina)", "login": "hayitovaanorxol", "password": "10asinf"}
 
 ]
-# Botni yaratish
+
+
 dp = Dispatcher()
 
 # Start komandasi uchun handler
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    await message.answer("Kundalik tizimiga kirish uchun  'Login Student' yoki 'Login Family' yozing.")
-
-# Proksi sozlamalarini kiritish
-proxy_url = 'http://127.0.0.1:4040 '  # Proksi manzilingizni kiriting
+    await message.answer("Kundalik tizimiga kirish uchun 'Login Student' yoki 'Login Family' yozing.")
 
 # Login Student tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Student')
 async def handle_login_student(message: types.Message):
-    # Create a session with proxy settings
-    async with aiohttp.ClientSession() as session:
-        for credentials in user_credentials:
-            login_data = {
-                'login': credentials['login'],
-                'password': credentials['password']
-            }
-            async with session.post('https://login.emaktab.uz/', data=login_data, proxy=proxy_url) as response:
-                if response.status == 200:
-                    await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
-                else:
-                    await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
+    for credentials in user_credentials:
+        login_data = {
+            'login': credentials['login'],
+            'password': credentials['password']
+        }
+        response = requests.post('https://login.emaktab.uz/', data=login_data)
+        
+        if response.status_code == 200:
+            await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
+        else:
+            await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
 
 # Login Family tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Family')
 async def handle_login_family(message: types.Message):
-    # Create a session with proxy settings
-    async with aiohttp.ClientSession() as session:
-        for credentials in user_credentials_family:
-            login_data = {
-                'login': credentials['login'],
-                'password': credentials['password']
-            }
-            async with session.post('https://login.emaktab.uz/', data=login_data, proxy=proxy_url) as response:
-                if response.status == 200:
-                    await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
-                else:
-                    await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
+    for credentials in user_credentials_family:
+        login_data = {
+            'login': credentials['login'],
+            'password': credentials['password']
+        }
+        response = requests.post('https://login.emaktab.uz/', data=login_data)
+        
+        if response.status_code == 200:
+            await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
+        else:
+            await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
 
 # Asinxron ishga tushirish
 async def main():
@@ -125,4 +120,5 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == '__main__':
+    import asyncio
     asyncio.run(main())
