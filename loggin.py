@@ -85,7 +85,7 @@ async def send_welcome(message: types.Message):
     await message.answer("Kundalik tizimiga kirish uchun  'Login Student' yoki 'Login Family' yozing.")
 
 # Proksi sozlamalarini kiritish
-proxy_url = 'https://193.186.4.104:8080'  # Proksi manzilingizni kiriting
+proxy_url = 'http://proxy.server:3128/'  # Proksi manzilingizni kiriting
 
 # Login Student tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Student')
