@@ -2,9 +2,21 @@ import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram import F
+import time
+import random
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
+keyboardStart = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text='Login Student'),
+            KeyboardButton(text='Login Family')
+        ]
+    ],
+    resize_keyboard=True
+)
 
-API_TOKEN = '7939396004:AAGzmCZ10PmzFFGejdDvgk-VLHvvQhqYeIU'
+API_TOKEN = '7693811434:AAHF2EI4xLhYss5xMeXQ2MxuwHaQ4-nrHMA'
 
 # O'quvchilarning login va parollari
 user_credentials = [
@@ -19,7 +31,7 @@ user_credentials = [
     {"name": "Isamuxammedova Ziyoda", "login": "ziyodaxongofurova", "password": "10asinf1"},
     {"name": "Isroilov Bexruz", "login": "bexruzisroilov", "password": "10asinf1"},
     {"name": "Mahmudjonova Mohinur", "login": "mohinurmaxmudjonova", "password": "10asinf1"},
-    {"name": "Mirkomilova Muxlisa", "login": "muxlisamirkomilova", "password": "10asinf1"},
+    {"name": "Mirkomilova Muxlisa", "login": "muxlisamirkomilova", "password": "10asinf"},
     {"name": "Mirpayziyev Azamat", "login": "mirpayziyev", "password": "10asinf1"},
     {"name": "Murodova Soliha", "login": "solihamurodova", "password": "10asinf1"},
     {"name": "Nuraliyev Yunusbek", "login": "yunusbek.nuraliyev", "password": "10asinf1"},
@@ -52,9 +64,9 @@ user_credentials_family = [
     {"name": "Daminov Kamoliddin (Muzammil)", "login": "kamoliddindaminov", "password": "10asinf"},
     {"name": "Irgashev Jamshiddin (Ismoil)", "login": "jamshiddinirgashov", "password": "10asinf"},
     {"name": "Isamuxammedov Jamshidjon (Ziyoda)", "login": "jamshidjoni", "password": "10asinf"},
-    {"name": "Israilov Ma'mur (Mohinur)", "login": "israilovmamur", "password": "10asinf"},
+    {"name": "Israilov Ma'mur (Mohinur)", "login": "israilovmamur", "password": "10asinf1"},
     {"name": "Isroilova Gullola (Behruz)", "login": "gullolaisroilova", "password": "10asinf"},
-    {"name": "Jalolova Zulxumor (Muhammadyusuf)", "login": "jalolovazulxumor", "password": "10asinf"},
+    {"name": "Jalolova Zulxumor (Muhammadyusuf)", "login": "jalolovazulxumor", "password": "10asinf1"},
     {"name": "Maxamedov Abdujabbor (Muxsina)", "login": "abdujabbormaxamedov", "password": "10asinf"},
     {"name": "Minavarov Olimjon (Muhammad Ali)", "login": "olimjonminavarov", "password": "10asinf"},
     {"name": "Mirpayziyev Mirkamol (Azamat)", "login": "mirkamolmirpayziyev", "password": "10asinf"},
@@ -82,7 +94,7 @@ dp = Dispatcher()
 # Start komandasi uchun handler
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    await message.answer("Kundalik tizimiga kirish uchun 'Login Student' yoki 'Login Family' yozing.")
+    await message.answer("Kundalik tizimiga kirish uchun 'Login Student' yoki 'Login Family' yozing.", reply_markup=keyboardStart)
 
 # Login Student tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Student')
@@ -99,6 +111,8 @@ async def handle_login_student(message: types.Message):
         else:
             await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
 
+        time.sleep(random.uniform(3, 6))
+
 # Login Family tugmasi bosilganda ishlovchi handler
 @dp.message(F.text == 'Login Family')
 async def handle_login_family(message: types.Message):
@@ -113,6 +127,9 @@ async def handle_login_family(message: types.Message):
             await message.answer(f"{credentials['name']} foydalanuvchisi ✅ 😃.")
         else:
             await message.answer(f"{credentials['name']} foydalanuvchisi ❌ ☹️")
+            
+        time.sleep(random.uniform(3, 6))
+
 
 # Asinxron ishga tushirish
 async def main():
