@@ -16,7 +16,7 @@ keyboardStart = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
-API_TOKEN = '7693811434:AAHF2EI4xLhYss5xMeXQ2MxuwHaQ4-nrHMA'
+API_TOKEN = '7939396004:AAGzmCZ10PmzFFGejdDvgk-VLHvvQhqYeIU'
 
 # O'quvchilarning login va parollari
 user_credentials = [
